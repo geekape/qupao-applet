@@ -1,6 +1,6 @@
 # buxingzhe-applet
 
-> A Mpvue project
+> A MPVue project
 
 ## Build Setup
 

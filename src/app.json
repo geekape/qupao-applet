@@ -1,13 +1,54 @@
 {
-  "pages": [
-    "pages/index/main",
-    "pages/logs/main",
-    "pages/counter/main"
-  ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
-  }
+    "pages": [{
+            "path": "pages/index",
+            "config": {
+                "navigationBarTitleText": "首页",
+                "enablePullDownRefresh": true
+            }
+        },
+        {
+            "path": "pages/discover",
+            "config": {
+                "navigationBarTitleText": "发现"
+            }
+        },
+        {
+            "path": "pages/me",
+            "config": {
+                "navigationBarTitleText": "个人中心"
+            }
+        }
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "WeChat",
+        "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "color": "#888",
+        "selectedColor": "#FF7321",
+        "list": [{
+                "iconPath": "./static/img/icon-home.png",
+                "selectedIconPath": "./static/img/icon-home_active.png",
+                "pagePath": "pages/index",
+                "text": "首页"
+
+            },
+            {
+                "iconPath": "./static/img/icon-eye.png",
+                "selectedIconPath": "./static/img/icon-eye_active.png",
+                "pagePath": "pages/discover",
+                "text": "发现"
+
+            },
+            {
+                "iconPath": "./static/img/icon-me.png",
+                "selectedIconPath": "./static/img/icon-me_active.png",
+                "pagePath": "pages/me",
+                "text": "我的"
+
+            }
+        ]
+    }
 }
