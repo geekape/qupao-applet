@@ -17,7 +17,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "~styles/style.scss";
 /* this rule will be remove */
 * {
   transition: width 2s;

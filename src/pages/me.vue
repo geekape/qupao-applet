@@ -1,48 +1,76 @@
-<template>
-  <div class="counter-warp">
-    <p>Vuex counter：{{ count }}</p>
-    <p>
-      <button @click="increment">+</button>
-      <button @click="decrement">-</button>
-    </p>
-
-    <a href="/pages/index" class="home">去往首页</a>
-  </div>
+<template lang="pug">
+  .me
+    .me-card
+      .me-card__hd
+        img.me-card__img()
+        me-card__name Geekape
+      .me-card__ft
+        .me-card__ft-item
+          .me-card__subtitle 日均步数
+          .me-card__number 4567
+        .me-card__ft-item
+          .me-card__subtitle 总公里数
+          .me-card__number 670
+        .me-card__ft-item
+          .me-card__subtitle 累计天数
+          .me-card__number 1230
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
 
 export default {
-  config: {
-    navigationBarTitleText: 'Vuex示例'
-  },
 
   computed: {
-    ...mapState([
-      'count'
-    ])
+    
   },
 
   methods: {
-    ...mapMutations([
-      'increment',
-      'decrement'
-    ])
+    
   }
 }
 </script>
 
-<style>
-.counter-warp {
-  text-align: center;
-  margin-top: 100px;
-}
-.home {
-  display: inline-block;
-  margin: 100px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
-}
+<style lang="scss" scoped>
+@import '~styles/style.scss';
+  .me-card {
+    margin: 15px;
+    color: #fff;
+    background:$primary-gradient;
+    border-radius: 6px;
+    box-shadow: 0 0 5px $primary-color;
+    padding: 20px 15px;
+    box-sizing: border-box;
+    height: 190px;
+    position: relative;
+    // 头部
+    &__hd {
+      display: flex;
+      align-items: center;
+    }
+    // 头像
+    &__img {
+      width: 58px;
+      height: 58px;
+      background: $gray;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+
+    &__ft {
+      display: flex;
+      position: absolute;
+      bottom: 20px;
+    }
+    &__ft-item {
+      flex: 1;
+      text-align: center;
+    }
+
+    &__subtitle {
+      font-size: 12px;
+    }
+    &__number {
+      font-size: 24px;
+    }
+  }
 </style>

@@ -62,8 +62,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary-color: #FF7321;
-$gray: #888;
+@import '~styles/style.scss';
 .g-flex-center {
   display: flex;
   justify-content: center;

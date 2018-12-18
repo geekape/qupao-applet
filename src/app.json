@@ -1,9 +1,14 @@
 {
     "pages": [{
+            "path": "pages/me",
+            "config": {
+                "navigationBarTitleText": "个人中心"
+            }
+        },
+        {
             "path": "pages/index",
             "config": {
-                "navigationBarTitleText": "首页",
-                "enablePullDownRefresh": true
+                "navigationBarTitleText": "首页"
             }
         },
         {
@@ -11,13 +16,8 @@
             "config": {
                 "navigationBarTitleText": "发现"
             }
-        },
-        {
-            "path": "pages/me",
-            "config": {
-                "navigationBarTitleText": "个人中心"
-            }
         }
+
     ],
     "window": {
         "backgroundTextStyle": "light",
