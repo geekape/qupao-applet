@@ -2,7 +2,16 @@
 * 清除小程序原生组件样式
 */
 
+page {
+    background: #f9f9f9;
+}
+
 image {
-    width: auto;
-    height: auto;
+    width: 20px;
+    height: 20px;
+}
+
+.weui-cells:before,
+.weui-cells:after {
+    border: 0
 }

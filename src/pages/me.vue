@@ -1,19 +1,47 @@
 <template lang="pug">
   .me
-    .me-card
-      .me-card__hd
-        img.me-card__img()
-        me-card__name Geekape
-      .me-card__ft
-        .me-card__ft-item
-          .me-card__subtitle 日均步数
-          .me-card__number 4567
-        .me-card__ft-item
-          .me-card__subtitle 总公里数
-          .me-card__number 670
-        .me-card__ft-item
-          .me-card__subtitle 累计天数
-          .me-card__number 1230
+    .me-box
+      .me-card
+        .me-card__hd
+          img.me-card__img()
+          me-card__name Geekape
+        .me-card__ft
+          .me-card__ft-item
+            .me-card__subtitle 日均步数
+            .me-card__number 4567
+          .me-card__ft-item
+            .me-card__subtitle 总公里数
+            .me-card__number 670
+          .me-card__ft-item
+            .me-card__subtitle 累计天数
+            .me-card__number 1230
+
+    .weui-cells
+      a.weui-cell
+        .weui-cell__hd
+          img(src="/static/images/icon-record.png")
+        .weui-cell__bd
+          p 运动记录
+        .weui-cell__ft_in-access
+    .weui-cells
+      a.weui-cell.weui-cell_access
+        .weui-cell__hd
+          img(src="/static/images/icon-setting.png")
+        .weui-cell__bd
+          p 设置
+        .weui-cell__ft_in-access
+      a.weui-cell.weui-cell_access
+        .weui-cell__hd
+          img(src="/static/images/icon-suggest.png")
+        .weui-cell__bd
+          p 投诉和建议
+        .weui-cell__ft_in-access
+      a.weui-cell.weui-cell_access
+        .weui-cell__hd
+          img(src="/static/images/icon-about.png")
+        .weui-cell__bd
+          p 关于
+        .weui-cell__ft_in-access
 </template>
 
 <script>
@@ -32,6 +60,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/style.scss';
+.me-box {
+  background: #fff;
+  padding: 15px 0;
+}
   .me-card {
     margin: 15px;
     color: #fff;
@@ -60,10 +92,14 @@ export default {
       display: flex;
       position: absolute;
       bottom: 20px;
+      left: 0;
+      right: 0;
     }
     &__ft-item {
       flex: 1;
       text-align: center;
+      border-left: 1px solid #FF5E00;
+      &:first-child{border: 0}
     }
 
     &__subtitle {
@@ -73,4 +109,12 @@ export default {
       font-size: 24px;
     }
   }
+
+  .weui-cell__hd image {
+    width: 28px;
+    height: 28px;
+    display: block;
+    margin-right: 5px;
+  }
+
 </style>

@@ -4,6 +4,7 @@ import App from '@/App'
 import store from '@/store'
 
 import '../static/styles/iconfont.css'
+import '../static/styles/weui.wxss'
 
 Vue.use(MpvueRouterPatch)
 Vue.config.productionTip = false
