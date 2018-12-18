@@ -29,26 +29,27 @@
         "color": "#888",
         "selectedColor": "#FF7321",
         "list": [{
-                "iconPath": "./static/img/icon-home.png",
-                "selectedIconPath": "./static/img/icon-home_active.png",
+                "iconPath": "./static/images/icon-home.png",
+                "selectedIconPath": "./static/images/icon-home_active.png",
                 "pagePath": "pages/index",
                 "text": "首页"
 
             },
             {
-                "iconPath": "./static/img/icon-eye.png",
-                "selectedIconPath": "./static/img/icon-eye_active.png",
+                "iconPath": "./static/images/icon-eye.png",
+                "selectedIconPath": "./static/images/icon-eye_active.png",
                 "pagePath": "pages/discover",
                 "text": "发现"
 
             },
             {
-                "iconPath": "./static/img/icon-me.png",
-                "selectedIconPath": "./static/img/icon-me_active.png",
+                "iconPath": "./static/images/icon-me.png",
+                "selectedIconPath": "./static/images/icon-me_active.png",
                 "pagePath": "pages/me",
                 "text": "我的"
 
             }
         ]
-    }
+    },
+    "debug": true
 }
