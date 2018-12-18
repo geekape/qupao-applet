@@ -4,7 +4,7 @@
       cover-view.m-card
         cover-view.m-card__title 0.00
         cover-view.m-card__desc 今日公里数
-        cover-image(src="/static/images/icon-marker.png")
+        cover-image(src="/static/images/icon-play.png")
 
       
 </template>
@@ -48,7 +48,9 @@ export default {
           let markers = {
             latitude: res.latitude,
             longitude: res.longitude,
-            iconPath: '/static/images/icon-eye.png'
+            iconPath: '/static/images/icon-marker.png',
+            width: 30,
+            height: 30
           }
           _this.latitude = res.latitude
           _this.longitude = res.longitude
@@ -75,21 +77,22 @@ $gray: #888;
 .m-card {
   @extend .g-flex-center;
   position: fixed;
-  background: rgba(255,255,255,.6);
+  background: #fff;
+  
   left: 0;
   bottom: 20px;
   right: 0;
   margin: auto;
   flex-direction: column;
-  width: 325px;
-  height: 325px;
+  width: 300px;
+  height: 300px;
   box-shadow: 0 0 10px rgba(0,0,0,.1);
   border-radius: 6px;
 
   // 标题
   &__title {
-    font-size: 60px;
-    color: $primary-color;
+    font-size: 48px;
+    color: #000;
   }
 
   // 描述
