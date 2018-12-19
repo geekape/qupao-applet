@@ -1,16 +1,16 @@
 {
     "pages": [{
+            "path": "pages/index",
+            "config": {
+                "navigationBarTitleText": "首页"
+            }
+        }, {
             "path": "pages/me",
             "config": {
                 "navigationBarTitleText": "个人中心"
             }
         },
-        {
-            "path": "pages/index",
-            "config": {
-                "navigationBarTitleText": "首页"
-            }
-        },
+
         {
             "path": "pages/discover",
             "config": {

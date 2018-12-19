@@ -4,13 +4,13 @@
       cover-view.m-card
         cover-view.m-card__title 0.00
         cover-view.m-card__desc 今日公里数
-        cover-image(src="/static/images/icon-play.png")
+        cover-image(src="/static/images/icon-play.png" @click="goCountDown")
 
-      
+      runCountDown(:isShow="isShow")
 </template>
 
 <script>
-
+import runCountDown from '@/components/runCountDown'
 export default {
   mpType: 'page',
   data () {
@@ -18,30 +18,38 @@ export default {
       latitude: null,
       longitude: null,
       circles: [],
-      markers:[]
+      markers:[],
+      isShow: false // 是否显示倒计时
     }
   },
 
   components: {
+    runCountDown
+  },
+
+  computed: {
+    // 是否显示底部tabbar
+
   },
 
   methods: {
-    openLocation() {
-      
+    goCountDown() {
+      this.isShow = true
+      wx.hideTabBar({})
     }
   },
 
   created () {
     const _this = this
-    wx.openSetting({
-    success(res) {
-      console.log(res.authSetting)
-      // res.authSetting = {
-      //   "scope.userInfo": true,
-      //   "scope.userLocation": true
-      // }
-    }
-  })
+  //   wx.openSetting({
+  //   success(res) {
+  //     console.log(res.authSetting)
+  //     // res.authSetting = {
+  //     //   "scope.userInfo": true,
+  //     //   "scope.userLocation": true
+  //     // }
+  //   }
+  // })
     wx.getLocation({
       type: 'wgs84',
         success: function(res){
@@ -63,6 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/style.scss';
+
 .g-flex-center {
   display: flex;
   justify-content: center;
