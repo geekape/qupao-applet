@@ -1,0 +1,26 @@
+.u-btn {
+    position: relative;
+    display: block;
+    padding-left: 14px;
+    padding-right: 14px;
+    font-size: 18px;
+    background: $primary-color;
+    color: #fff;
+    line-height: 2.5;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    border: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    overflow: hidden;
+    border-radius: 30px;
+    box-shadow: 0 0 15px #FF6457;
+}
+
+.u-btn_primary {
+    background: linear-gradient($primary-color, $warn-color);
+}
+
+.u-btn_lg {
+    width: 100%
+}

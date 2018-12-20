@@ -1,5 +1,10 @@
 {
     "pages": [{
+            "path": "pages/share",
+            "config": {
+                "navigationBarTitleText": "分享"
+            }
+        }, {
             "path": "pages/run",
             "config": {
                 "navigationBarTitleText": "跑步页"
@@ -23,6 +28,7 @@
                 "navigationBarTitleText": "发现"
             }
         }
+
 
 
     ],
