@@ -2,20 +2,25 @@
     .run
       maps
       .run-info
-        .run-info__km 0.00
+        .run-info__km {{runKm}}
           span.km.f-font-xs 公里
-        .run-info__row
-          .run-info__item
+        .run-info__row.run-info__row_text
+          .run-info__item.run-info__item_time
             .run-info__title.f-font-xs  运动时间
-            .run-info__number 00:45
+            .run-info__number {{runTime}}
           .run-info__item
             .run-info__title.f-font-xs  配速
-            .run-info__number 5'8
+            .run-info__number {{runSpeed}}
           .run-info__item
             .run-info__title.f-font-xs  卡路里
-            .run-info__number 180
+            .run-info__number {{runCal}}
               span.f-font-xs 千卡
-          
+        .run-info__row
+          i.iconfont.icon-unlock
+          img.run-icon_pause(src="/static/images/icon-pause.png" v-show="!isPause" @click="pauseRun")
+          img.run-icon_end(src="/static/images/icon-end.png" v-show="isPause" )
+          img.run-icon_play(src="/static/images/icon-play_blue.png" v-show="isPause")
+          i.iconfont(@click="mute" :class="isMute")
       
 </template>
 
@@ -25,7 +30,12 @@ export default {
   mpType: 'page',
   data () {
     return {
-      
+      isPause: false, //是否暂停
+      soundState: false, //声音状态
+      runKm: '0.00',
+      runTime: '00:00:45',
+      runSpeed: "--",
+      runCal: 0
     }
   },
 
@@ -34,11 +44,24 @@ export default {
   },
 
   computed: {
-
+    isMute () {
+      if(this.soundState) {
+        return 'icon-wusheng'
+      } else {
+        return 'icon-sound'
+      }
+    }
   },
 
   methods: {
-    
+    // 暂停跑步
+    pauseRun () {
+      this.isPause = true
+    },
+    // 静音
+    mute () {
+      this.soundState != this.soundState
+    }
   },
 
   created () {
@@ -53,20 +76,28 @@ export default {
   background: #fff;
 }
 .run-info {
-  padding: 15px;
-  height: 40vh;
+  padding: 0 15px;
+  height: 43vh;
   &__km {
-    font-size: 48px;
+    font-size: 54px;
     text-align: center;
     .km {margin-left: 5px;}
   }
 
   &__row {
     display: flex;
-    margin-top: 20px;
+    
+    justify-content: center;
+    align-items: center;
+    &_text {
+      padding: 10px 0;
+      border-bottom: 1px solid #fbfbfb;
+      margin-bottom: 20px;
+    }
   }
   &__item {
     flex: 1;
+    &_time {flex: 20%}
   }
 
   &__title {
@@ -76,7 +107,27 @@ export default {
   &__number {
     font-size: 24px;
   }
-
 }
+
+i.iconfont {
+  font-size: 24px;
+  flex: 1;
+}
+i.icon-wusheng,
+i.icon-sound {text-align: right;}
+
+
+// icon
+
+.run-icon_end,
+.run-icon_play,
+.run-icon_pause {
+  width: 62px;
+  height: 62px;
+}
+.run-icon_end {
+  margin-right: 30px;
+}
+
 
 </style>

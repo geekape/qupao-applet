@@ -36,6 +36,6 @@ export default {
 <style lang="scss" scoped>
   .maps {
     width: 100%;
-    min-height: 60vh;
+    min-height: 57vh;
   }
 </style>
