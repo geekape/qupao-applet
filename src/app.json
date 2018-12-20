@@ -1,5 +1,11 @@
 {
     "pages": [{
+            "path": "pages/run",
+            "config": {
+                "navigationBarTitleText": "跑步页"
+            }
+        },
+        {
             "path": "pages/index",
             "config": {
                 "navigationBarTitleText": "首页"
@@ -17,6 +23,7 @@
                 "navigationBarTitleText": "发现"
             }
         }
+
 
     ],
     "window": {
