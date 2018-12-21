@@ -1,5 +1,10 @@
 {
     "pages": [{
+            "path": "pages/index",
+            "config": {
+                "navigationBarTitleText": "首页"
+            }
+        }, {
             "path": "pages/share",
             "config": {
                 "navigationBarTitleText": "分享"
@@ -11,11 +16,6 @@
             }
         },
         {
-            "path": "pages/index",
-            "config": {
-                "navigationBarTitleText": "首页"
-            }
-        }, {
             "path": "pages/me",
             "config": {
                 "navigationBarTitleText": "个人中心"

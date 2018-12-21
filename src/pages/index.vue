@@ -7,10 +7,12 @@
         cover-image(src="/static/images/icon-play.png" @click="goCountDown")
 
       runCountDown(:isShow="isShow")
+      popup
 </template>
 
 <script>
 import runCountDown from '@/components/runCountDown'
+import popup from '@/components/popup'
 export default {
   mpType: 'page',
   data () {
@@ -24,7 +26,8 @@ export default {
   },
 
   components: {
-    runCountDown
+    runCountDown,
+    popup
   },
 
   computed: {
