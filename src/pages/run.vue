@@ -18,7 +18,7 @@
         .run-info__row
           i.iconfont.icon-unlock
           img.run-icon_pause(src="/static/images/icon-pause.png" v-show="!isPause" @click="pauseRun")
-          img.run-icon_end(src="/static/images/icon-end.png" v-show="isPause" )
+          img.run-icon_end(src="/static/images/icon-end.png" v-show="isPause" @click="endRun")
           img.run-icon_play(src="/static/images/icon-play_blue.png" v-show="isPause")
           i.iconfont(@click="mute" :class="isMute")
       
@@ -61,6 +61,21 @@ export default {
     // 静音
     mute () {
       this.soundState != this.soundState
+    },
+    // 结束跑步
+    endRun () {
+      wx.showModal({
+        title: '提示',
+        content: '是否结束跑步',
+        success(res) {
+          if (res.confirm) {
+            console.log('确定')
+            wx.redirectTo({url: './share'})
+          } else if (res.cancel) {
+            console.log('取消')
+          }
+        }
+      })
     }
   },
 
@@ -126,7 +141,7 @@ i.icon-sound {text-align: right;}
   height: 62px;
 }
 .run-icon_end {
-  margin-right: 30px;
+  margin-right: 70px;
 }
 
 

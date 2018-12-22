@@ -1,6 +1,6 @@
 <template lang="pug">
   cover-view.count-down.animated.fadeInRight(v-if="isShow==true")
-    cover-view.count-down__num 3
+    cover-view.count-down__num.animated.zoomIn {{countDownNum}}
 </template>
 
 <script>
@@ -9,8 +9,10 @@ export default {
     isShow: {
       type: Boolean,
       default: false
-    }
+    },
+    countDownNum: Number
   }
+
 }
 </script>
 
@@ -28,6 +30,11 @@ export default {
     justify-content: center;
     align-items: center;
     color: #fff;
-    font-size: 80px;
+    
+
+    &__num {
+      font-size: 100px;
+      font-weight: bold;
+    }
   }
 </style>

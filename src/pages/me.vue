@@ -3,8 +3,8 @@
     .me-box
       .me-card
         .me-card__hd
-          img.me-card__img()
-          me-card__name Geekape
+          img.me-card__img(:src="userInfo.avatarUrl")
+          me-card__name {{userInfo.nickName}}
         .me-card__ft
           .me-card__ft-item
             .me-card__subtitle 日均步数
@@ -47,6 +47,11 @@
 <script>
 
 export default {
+  data() {
+    return {
+      userInfo: {}
+    }
+  },
 
   computed: {
     
@@ -54,6 +59,10 @@ export default {
 
   methods: {
     
+  },
+
+  created() {
+    this.userInfo = wx.getStorageSync('userInfo')
   }
 }
 </script>

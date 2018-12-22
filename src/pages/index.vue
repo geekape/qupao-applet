@@ -6,23 +6,25 @@
         cover-view.m-card__desc 今日公里数
         cover-image(src="/static/images/icon-play.png" @click="goCountDown")
 
-      runCountDown(:isShow="isShow")
-      popup
+      runCountDown(:isShow="isShow" :countDownNum="countDownNum")
+      popup(:isPopupShow="isPopupShow")
 </template>
 
 <script>
-import runCountDown from '@/components/runCountDown'
-import popup from '@/components/popup'
+import runCountDown from "@/components/runCountDown";
+import popup from "@/components/popup";
 export default {
-  mpType: 'page',
-  data () {
+  mpType: "page",
+  data() {
     return {
       latitude: null,
       longitude: null,
       circles: [],
-      markers:[],
-      isShow: false // 是否显示倒计时
-    }
+      markers: [],
+      isShow: false, // 是否显示倒计时
+      isPopupShow: false, //是否显示授权弹窗
+      countDownNum: 3
+    };
   },
 
   components: {
@@ -32,48 +34,65 @@ export default {
 
   computed: {
     // 是否显示底部tabbar
-
   },
 
   methods: {
     goCountDown() {
-      this.isShow = true
-      wx.hideTabBar({})
+      const _this = this;
+      this.isShow = true;
+      wx.hideTabBar({});
+      setTimeout(function() {
+        if (_this.countDownNum > 1) {
+          _this.countDownNum--;
+          _this.goCountDown();
+        } else {
+          wx.redirectTo({ url: "./run" });
+        }
+      }, 1000);
     }
   },
 
-  created () {
-    const _this = this
-  //   wx.openSetting({
-  //   success(res) {
-  //     console.log(res.authSetting)
-  //     // res.authSetting = {
-  //     //   "scope.userInfo": true,
-  //     //   "scope.userLocation": true
-  //     // }
-  //   }
-  // })
+  created() {
+    const _this = this;
+    
+    // 用户信息
+    const userInfo = wx.getStorageSync('userInfo')
+    if(!userInfo) {
+      console.log('不为真111')
+      this.isPopupShow = true
+    }
+    
+    wx.getSetting({
+      success(res) {
+        console.log(res.authSetting);
+        // res.authSetting = {
+        //   "scope.userInfo": true,
+        //   "scope.userLocation": true
+        // }
+      }
+    });
+
     wx.getLocation({
-      type: 'wgs84',
-        success: function(res){
-          let markers = {
-            latitude: res.latitude,
-            longitude: res.longitude,
-            iconPath: '/static/images/icon-marker.png',
-            width: 30,
-            height: 30
-          }
-          _this.latitude = res.latitude
-          _this.longitude = res.longitude
-          _this.markers.push(markers)
-        }  
-    })
+      type: "wgs84",
+      success: function(res) {
+        let markers = {
+          latitude: res.latitude,
+          longitude: res.longitude,
+          iconPath: "/static/images/icon-marker.png",
+          width: 30,
+          height: 30
+        };
+        _this.latitude = res.latitude;
+        _this.longitude = res.longitude;
+        _this.markers.push(markers);
+      }
+    });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/style.scss';
+@import "~styles/style.scss";
 
 .g-flex-center {
   display: flex;
@@ -89,7 +108,7 @@ export default {
   @extend .g-flex-center;
   position: fixed;
   background: #fff;
-  
+
   left: 0;
   bottom: 20px;
   right: 0;
@@ -97,7 +116,7 @@ export default {
   flex-direction: column;
   width: 300px;
   height: 300px;
-  box-shadow: 0 0 10px rgba(0,0,0,.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
 
   // 标题
@@ -117,7 +136,7 @@ export default {
   &__btn {
     font-size: 80px;
     color: $primary-color;
-    border-radius:70px;
+    border-radius: 70px;
   }
 }
 
