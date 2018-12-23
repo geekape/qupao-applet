@@ -17,16 +17,27 @@ export default {
     wx.getLocation({
       type: 'wgs84',
         success: function(res){
-          let markers = {
-            latitude: res.latitude,
-            longitude: res.longitude,
+          let latitude = res.latitude
+          let longitude = res.longitude
+
+          _this.latitude = latitude
+          _this.longitude = longitude
+          _this.circles.push({
+            latitude: latitude,
+            longitude: longitude,
+            radius: 50,
+            color: '#fff',
+            fillColor: '#FF7321',
+            strokeWidth: 2
+          })
+          _this.markers.push({
+            latitude: latitude,
+            longitude: longitude,
             iconPath: '/static/images/icon-marker.png',
-            width: 30,
-            height: 30
-          }
-          _this.latitude = res.latitude
-          _this.longitude = res.longitude
-          _this.markers.push(markers)
+            width: 20,
+            height: 20
+
+          })
         }  
     })
   }

@@ -26,6 +26,9 @@
 
 <script>
 import maps from '@/components/maps'
+import {formatTimeHms} from '@/utils'
+let timers = null,number = 0
+
 export default {
   mpType: 'page',
   data () {
@@ -33,7 +36,7 @@ export default {
       isPause: false, //是否暂停
       soundState: false, //声音状态
       runKm: '0.00',
-      runTime: '00:00:45',
+      runTime: '00:00:00',
       runSpeed: "--",
       runCal: 0
     }
@@ -57,6 +60,11 @@ export default {
     // 暂停跑步
     pauseRun () {
       this.isPause = true
+      clearInterval(timers)
+    },
+    // 继续跑步
+    continueRun () {
+      this.startRun()
     },
     // 静音
     mute () {
@@ -76,10 +84,20 @@ export default {
           }
         }
       })
-    }
+    },
+
+    startRun() {
+      const _this = this
+      timers = setInterval(function() {
+        number++
+        _this.runTime = formatTimeHms(number)
+      }, 1000)
+    },
   },
 
-  created () {
+  onLoad () {
+    Object.assign(this, this.$options.data());
+    this.startRun()
     
   }
 }

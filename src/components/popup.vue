@@ -1,14 +1,13 @@
 <template lang="pug">
   cover-view.popup(v-if="isPopupShow")
-    cover-view.popup-shade
     cover-view.popup-content.animated.zoomIn
       cover-image.logo(src="/static/images/logo.png")
       cover-view.name 趣跑
 
-      cover-view.title 该小程序需要你提供以下授权，即可继续操作
-      cover-view.desc.f-font-xs 获取你的公开信息（昵称/头像等）
+      cover-view.title 小程序需要你提供以下授权，即可继续操作
+      cover-view.desc.f-font-xs ● 获取你的公开信息（昵称/头像等）
 
-      button.u-btn.u-btn_primary(open-type="getUserInfo" @getuserinfo="getUserInfo") 立即授权
+      button.u-button(open-type="getUserInfo" @getuserinfo="getUserInfo") 立即授权
 </template>
 
 <script>
@@ -22,9 +21,19 @@ export default {
 
   methods: {
     getUserInfo(e) {
-      this.isPopupShow = false
-      console.log(e.mp.detail.userInfo,e)
-      wx.setStorageSync('userInfo', e.mp.detail.userInfo)
+      const _this = this
+     
+      wx.getUserInfo({
+        success: function (res){
+            _this.$emit('closePopup')
+            console.log("userInfo:"+res)
+　　　　　　　//do anything
+            wx.setStorageSync('userInfo', e.mp.detail.userInfo)
+        },
+        fail: function(err) {
+          console.log('错误了',err)
+        }
+      })
       
     }
   }
@@ -32,31 +41,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-%position-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-}
+@import '~styles/_variable.scss';
+@import '~styles/_utils.scss';
 .popup {
-  position: relative;
   z-index: 999;
   width: 100%;
   height: 100%;
   display: block;
+  @extend %position-fixed;
+  @extend .f-xy-center;
+  background: rgba(0, 0, 0, 0.6);
 
-  &-shade {
-    @extend %position-fixed;
-    background: rgba(0, 0, 0, 0.6);
-  }
   &-content {
     @extend %position-fixed;
     width: 305px;
     height: 375px;
     background: #fff;
     border-radius: 6px;
+    padding: 0 20px;
+    box-sizing: border-box;
   }
 
   .logo {
@@ -68,12 +71,11 @@ export default {
   .name {
     text-align: center;
     margin: 10px 0 20px;
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .title,
   .desc {
-    margin: 0 26px;
     font-size: 14px;
   }
 
@@ -82,23 +84,16 @@ export default {
     padding-left: 10px;
     margin-top: 10px;
     position: relative;
-    &:before {
-      content: "";
-      width: 4px;
-      height: 4px;
-      background: #888;
-      border-radius: 50%;
-      position: absolute;
-      left: 0;
-      top: calc(50% - 3px);
-    }
   }
 
-  .u-btn {
+  .u-button {
     position: absolute;
-    bottom: 15px;
     left: 15px;
     right: 15px;
+    bottom: 15px;
+    background: $primary-color;
+    border-radius: 30px;
+    color: #fff;
   }
 }
 </style>

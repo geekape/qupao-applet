@@ -1,13 +1,13 @@
 <template lang="pug">
     .index
-      map#map(:longitude="longitude" :latitude="latitude" :markers="markers" show-compass :circles="circles")
+      map#map(:longitude="longitude" :latitude="latitude" :markers="markers" show-compass :circles="circles" :enable-zoom="false" :enable-scroll="false" subkey="INVBZ-OWGKQ-4WC5D-GTP3C-UAAFV-TJFUQ" scale="16")
       cover-view.m-card
-        cover-view.m-card__title 0.00
+        cover-view.m-card__title 0.00 
         cover-view.m-card__desc 今日公里数
         cover-image(src="/static/images/icon-play.png" @click="goCountDown")
 
       runCountDown(:isShow="isShow" :countDownNum="countDownNum")
-      popup(:isPopupShow="isPopupShow")
+      popup(:isPopupShow="isPopupShow" @closePopup="isPopupShow=false")
 </template>
 
 <script>
@@ -49,44 +49,44 @@ export default {
           wx.redirectTo({ url: "./run" });
         }
       }, 1000);
+    },
+    getLocation() {
+      const _this = this;
+      wx.getLocation({
+        type: "gcj02", // 返回可以用于wx.openLocation的经纬度
+        success(res) {
+          let latitude = res.latitude;
+          let longitude = res.longitude;
+          let markers = {
+            latitude: latitude,
+            longitude: longitude,
+            iconPath: "/static/images/icon-marker.png",
+            width: 30,
+            height: 30
+          };
+          _this.latitude = res.latitude;
+          _this.longitude = res.longitude;
+          _this.markers.push(markers);
+        }
+      });
     }
   },
 
-  created() {
-    const _this = this;
-    
+  onLoad() {
+    Object.assign(this, this.$options.data());
     // 用户信息
-    const userInfo = wx.getStorageSync('userInfo')
-    if(!userInfo) {
-      console.log('不为真111')
-      this.isPopupShow = true
+    const userInfo = wx.getStorageSync("userInfo");
+    if (!userInfo) {
+      console.log("不为真111");
+      this.isPopupShow = true;
     }
-    
+
     wx.getSetting({
       success(res) {
         console.log(res.authSetting);
-        // res.authSetting = {
-        //   "scope.userInfo": true,
-        //   "scope.userLocation": true
-        // }
       }
     });
-
-    wx.getLocation({
-      type: "wgs84",
-      success: function(res) {
-        let markers = {
-          latitude: res.latitude,
-          longitude: res.longitude,
-          iconPath: "/static/images/icon-marker.png",
-          width: 30,
-          height: 30
-        };
-        _this.latitude = res.latitude;
-        _this.longitude = res.longitude;
-        _this.markers.push(markers);
-      }
-    });
+    this.getLocation()
   }
 };
 </script>
@@ -145,8 +145,8 @@ map {
   height: 100vh;
 }
 cover-image {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 }
 </style>

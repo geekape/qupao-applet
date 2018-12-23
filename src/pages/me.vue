@@ -8,13 +8,13 @@
         .me-card__ft
           .me-card__ft-item
             .me-card__subtitle 日均步数
-            .me-card__number 4567
+            .me-card__number {{meanStep}}
           .me-card__ft-item
             .me-card__subtitle 总公里数
-            .me-card__number 670
+            .me-card__number {{totalKm}}
           .me-card__ft-item
             .me-card__subtitle 累计天数
-            .me-card__number 1230
+            .me-card__number {{totalDay}}
 
     .weui-cells
       a.weui-cell
@@ -49,7 +49,10 @@
 export default {
   data() {
     return {
-      userInfo: {}
+      userInfo: {},
+      meanStep: 0,
+      totalKm: 0,
+      totalDay: 0
     }
   },
 
@@ -61,8 +64,9 @@ export default {
     
   },
 
-  created() {
+  onLoad() {
     this.userInfo = wx.getStorageSync('userInfo')
+    wx.showTabBar({});
   }
 }
 </script>

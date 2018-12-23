@@ -20,7 +20,7 @@
             .run-info__number {{runCal}}
               span.f-font-xs 千卡
         .run-info__row.run-info__row_btn
-          a.u-btn.u-btn_primary.u-btn_lg(href="./me" open-type="redirect") 分享战绩
+          a.u-btn.u-btn_primary.u-btn_lg(href="./me" open-type="switchTab") 分享战绩
       
 </template>
 
