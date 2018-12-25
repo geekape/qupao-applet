@@ -92,7 +92,6 @@ export default {
     });
     this.getLocation()
 
-    
   }
 };
 </script>

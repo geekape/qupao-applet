@@ -6,8 +6,8 @@
           .run-info__km.run-info__item {{runKm}}
             span.km.f-font-xs 公里
           .run-info__item.f-text-aglin_r
-            .run-info__name Geekape
-            .run-info__time.f-font-xs 12月19日 18:30
+            .run-info__name {{userInfo.nickName}}
+            .run-info__time.f-font-xs {{selfTime}}
         .run-info__row.run-info__row_text
           .run-info__item.run-info__item_time
             .run-info__title.f-font-xs  运动时间
@@ -30,12 +30,11 @@ export default {
   mpType: 'page',
   data () {
     return {
-      isPause: false, //是否暂停
-      soundState: false, //声音状态
-      runKm: '0.00',
-      runTime: '00:00:45',
-      runSpeed: "--",
-      runCal: 0
+      runKm: '',
+      runTime: '',
+      runSpeed: '',
+      runCal: '',
+      userInfo: {}
     }
   },
 
@@ -50,6 +49,11 @@ export default {
       } else {
         return 'icon-sound'
       }
+    },
+    selfTime () {
+      let time = new Date()
+      let [month, day, hours, minutes] = [time.getMonth()+1, time.getDate(), time.getHours(), time.getMinutes()]
+      return `${month}月${day}日 ${hours<10 ? '0'+hours : hours}:${minutes<10 ? '0'+minutes : minutes}`
     }
   },
 
@@ -61,11 +65,21 @@ export default {
     // 静音
     mute () {
       this.soundState != this.soundState
+    },
+    getData() {
+      let data = this.$store.state.runInfo;
+      console.log(data)
+      this.runKm = data.runKm 
+      this.runTime = data.runTime 
+      this.runSpeed = data.runSpeed 
+      this.runCal = data.runCal
+
+      this.userInfo = wx.getStorageSync('userInfo')
     }
   },
 
-  created () {
-    
+  onLoad () {
+    this.getData()
   }
 }
 </script>

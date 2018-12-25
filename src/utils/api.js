@@ -1,8 +1,6 @@
 var plugin = requirePlugin("WechatSI")
-const backgroundAudioManager = wx.getBackgroundAudioManager()
-const backgroundAudioManager2 = wx.getBackgroundAudioManager()
-const backgroundAudioManager3 = wx.getBackgroundAudioManager()
-const backgroundAudioManager4 = wx.getBackgroundAudioManager()
+
+
 const _jitang = [
     "运动是一切生命的源泉",
     "你只有非常努力，才能看起来毫不费力",
@@ -19,6 +17,13 @@ const _jitang = [
 ]
 
 
+function _playAudio(id) {
+    let backgroundAudioManager = wx.getBackgroundAudioManager()
+    let audioUrl = `https://ae.weixin.qq.com/cgi-bin/mmasrai-bin/getmedia?filename=${id}_${id}&filekey=492778834&source=miniapp_plugin`
+
+    backgroundAudioManager.src = audioUrl
+}
+
 
 const api = {
     playAudio(text) {
@@ -28,6 +33,7 @@ const api = {
             content: text,
             success: function(res) {
                 console.log("succ tts", res)
+                let backgroundAudioManager = wx.getBackgroundAudioManager()
                 backgroundAudioManager.src = res.filename
             },
             fail: function(res) {
@@ -36,14 +42,30 @@ const api = {
 
         })
     },
+    // 倒计时
     playCountDown(number) {
-        if (number == 3) backgroundAudioManager.src = 'https://ae.weixin.qq.com/cgi-bin/mmasrai-bin/getmedia?filename=219253119821676548_219253119821676548&filekey=492778834&source=miniapp_plugin'
-        else if (number == 2) backgroundAudioManager.src = "https://ae.weixin.qq.com/cgi-bin/mmasrai-bin/getmedia?filename=218800168273379333_218800168273379333&filekey=492778834&source=miniapp_plugin"
-        else backgroundAudioManager.src = "https://ae.weixin.qq.com/cgi-bin/mmasrai-bin/getmedia?filename=219253132706578436_219253132706578436&filekey=492778834&source=miniapp_plugin"
+        if (number == 3) _playAudio('219253119821676548')
+        else if (number == 2) _playAudio('218800168273379333')
+        else _playAudio('219253132706578436')
     },
+    // 开始跑步
     playStartRun() {
-        backgroundAudioManager.src = "https://ae.weixin.qq.com/cgi-bin/mmasrai-bin/getmedia?filename=363376369551147012_363376369551147012&filekey=492778834&source=miniapp_plugin"
+        _playAudio('363376369551147012')
     },
+    // 暂停跑步
+    playStopRun() {
+        _playAudio('433006001400643587')
+    },
+    // 结束跑步
+    playEndRun() {
+        _playAudio('435967995527692292')
+    },
+    // 恢复跑步
+    playRenewRun() {
+        _playAudio('435974979144515588')
+    },
+
+
     playRandom() {
         let text = _jitang[parseInt(Math.random() * _jitang.length)]
         this.playAudio(text)

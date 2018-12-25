@@ -6,19 +6,15 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  state: {
-    count: 0
-  },
-  mutations: {
-    increment: (state) => {
-      const obj = state
-      obj.count += 1
+    state: {
+        runInfo: {}
     },
-    decrement: (state) => {
-      const obj = state
-      obj.count -= 1
+    mutations: {
+        // 保存跑步信息
+        saveRunInfo(state, data) {
+            state.runInfo = data
+        }
     }
-  }
 })
 
 export default store

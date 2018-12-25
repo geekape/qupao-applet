@@ -38,7 +38,7 @@ export default {
       soundState: false, //声音状态
       runKm: '0.00',
       runTime: '00:00:00',
-      runSpeed: "--",
+      runSpeed: "0'00''",
       runCal: 0
     }
   },
@@ -60,13 +60,13 @@ export default {
   methods: {
     // 暂停跑步
     pauseRun () {
-      api.playAudio('跑步已暂停')
+      api.playStopRun()
       this.isPause = true
       clearInterval(timers)
     },
     // 继续跑步
     continueRun () {
-      api.playAudio('跑步已恢复')
+      api.playRenewRun()
       this.isPause = false
       this.startRun()
 
@@ -77,13 +77,20 @@ export default {
     },
     // 结束跑步
     endRun () {
+      const _this = this
       wx.showModal({
         title: '提示',
         content: '是否结束跑步',
         success(res) {
           if (res.confirm) {
             console.log('确定')
-            api.playAudio('跑步已结束，总里程9999公里，棒棒哒')
+            api.playEndRun()
+            _this.$store.commit('saveRunInfo', {
+              runKm: _this.runKm, 
+              runTime: _this.runTime, 
+              runSpeed: _this.runSpeed, 
+              runCal: _this.runCal
+            })
             wx.redirectTo({url: './share'})
           } else if (res.cancel) {
             console.log('取消')
