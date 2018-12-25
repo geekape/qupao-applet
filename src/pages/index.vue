@@ -1,6 +1,6 @@
 <template lang="pug">
     .index
-      map#map(:longitude="longitude" :latitude="latitude" :markers="markers" show-compass :circles="circles" :enable-zoom="false" :enable-scroll="false" subkey="INVBZ-OWGKQ-4WC5D-GTP3C-UAAFV-TJFUQ" scale="16")
+      map#map(:longitude="longitude" :latitude="latitude" :markers="markers" show-compass :circles="circles" :enable-zoom="false" :enable-scroll="false" scale="16")
       cover-view.m-card
         cover-view.m-card__title 0.00 
         cover-view.m-card__desc 今日公里数
@@ -13,6 +13,8 @@
 <script>
 import runCountDown from "@/components/runCountDown";
 import popup from "@/components/popup";
+import {api} from "@/utils/api"
+
 export default {
   mpType: "page",
   data() {
@@ -41,14 +43,16 @@ export default {
       const _this = this;
       this.isShow = true;
       wx.hideTabBar({});
+      api.playCountDown(`${_this.countDownNum}`)
       setTimeout(function() {
         if (_this.countDownNum > 1) {
           _this.countDownNum--;
           _this.goCountDown();
         } else {
+          api.playStartRun()
           wx.redirectTo({ url: "./run" });
         }
-      }, 1000);
+      }, 1200);
     },
     getLocation() {
       const _this = this;
@@ -87,6 +91,8 @@ export default {
       }
     });
     this.getLocation()
+
+    
   }
 };
 </script>

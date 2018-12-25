@@ -24,6 +24,7 @@
           p 运动记录
         .weui-cell__ft_in-access
     .weui-cells
+    
       a.weui-cell.weui-cell_access
         .weui-cell__hd
           img(src="/static/images/icon-setting.png")
@@ -42,17 +43,19 @@
         .weui-cell__bd
           p 关于
         .weui-cell__ft_in-access
+        
 </template>
 
 <script>
-
+import {api} from '@/utils/api'
 export default {
   data() {
     return {
       userInfo: {},
       meanStep: 0,
       totalKm: 0,
-      totalDay: 0
+      totalDay: 0,
+      audio: {}
     }
   },
 
@@ -65,9 +68,12 @@ export default {
   },
 
   onLoad() {
+    const _this = this
     this.userInfo = wx.getStorageSync('userInfo')
     wx.showTabBar({});
+
   }
+  
 }
 </script>
 

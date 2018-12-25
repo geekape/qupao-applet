@@ -5,7 +5,7 @@
       cover-view.name 趣跑
 
       cover-view.title 小程序需要你提供以下授权，即可继续操作
-      cover-view.desc.f-font-xs ● 获取你的公开信息（昵称/头像等）
+      cover-view.desc.f-font-xs - 获取你的公开信息（昵称/头像等）
 
       button.u-button(open-type="getUserInfo" @getuserinfo="getUserInfo") 立即授权
 </template>

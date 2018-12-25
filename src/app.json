@@ -5,6 +5,11 @@
                 "navigationBarTitleText": "首页"
             }
         }, {
+            "path": "pages/me",
+            "config": {
+                "navigationBarTitleText": "个人中心"
+            }
+        }, {
             "path": "pages/share",
             "config": {
                 "navigationBarTitleText": "分享"
@@ -15,12 +20,7 @@
                 "navigationBarTitleText": "跑步页"
             }
         },
-        {
-            "path": "pages/me",
-            "config": {
-                "navigationBarTitleText": "个人中心"
-            }
-        },
+
 
         {
             "path": "pages/discover",
@@ -64,5 +64,11 @@
             }
         ]
     },
-    "debug": true
+    "debug": true,
+    "plugins": {
+        "WechatSI": {
+            "version": "0.2.2",
+            "provider": "wx069ba97219f66d99"
+        }
+    }
 }

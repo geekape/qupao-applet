@@ -19,7 +19,7 @@
           i.iconfont.icon-unlock
           img.run-icon_pause(src="/static/images/icon-pause.png" v-show="!isPause" @click="pauseRun")
           img.run-icon_end(src="/static/images/icon-end.png" v-show="isPause" @click="endRun")
-          img.run-icon_play(src="/static/images/icon-play_blue.png" v-show="isPause")
+          img.run-icon_play(src="/static/images/icon-play_blue.png" v-show="isPause" @click="continueRun")
           i.iconfont(@click="mute" :class="isMute")
       
 </template>
@@ -27,6 +27,7 @@
 <script>
 import maps from '@/components/maps'
 import {formatTimeHms} from '@/utils'
+import {api} from '@/utils/api'
 let timers = null,number = 0
 
 export default {
@@ -59,12 +60,16 @@ export default {
   methods: {
     // 暂停跑步
     pauseRun () {
+      api.playAudio('跑步已暂停')
       this.isPause = true
       clearInterval(timers)
     },
     // 继续跑步
     continueRun () {
+      api.playAudio('跑步已恢复')
+      this.isPause = false
       this.startRun()
+
     },
     // 静音
     mute () {
@@ -78,6 +83,7 @@ export default {
         success(res) {
           if (res.confirm) {
             console.log('确定')
+            api.playAudio('跑步已结束，总里程9999公里，棒棒哒')
             wx.redirectTo({url: './share'})
           } else if (res.cancel) {
             console.log('取消')
@@ -98,6 +104,7 @@ export default {
   onLoad () {
     Object.assign(this, this.$options.data());
     this.startRun()
+    setTimeout(function() {api.playRandom()}, 2000)
     
   }
 }
