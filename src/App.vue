@@ -2,7 +2,8 @@
 export default {
   globalConfig: {
     usingComponents: {
-      'van-tag': '/static/vant-weapp/dist/tag/index'
+      "canvasdrawer": "/static/canvasdrawer/canvasdrawer",
+      "van-popup": "/static/vant-weapp/dist/popup/index"
     }
   },
   created () {

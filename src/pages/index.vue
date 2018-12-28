@@ -1,6 +1,6 @@
 <template lang="pug">
     .index
-      map#map(:longitude="longitude" :latitude="latitude" :markers="markers" show-compass :circles="circles" :enable-zoom="false" :enable-scroll="false" scale="16")
+      map#map(:longitude="longitude" :latitude="latitude" show-compass :enable-zoom="false" :enable-scroll="false" show-location)
       cover-view.m-card
         cover-view.m-card__title 0.00 
         cover-view.m-card__desc 今日公里数
@@ -61,23 +61,28 @@ export default {
         success(res) {
           let latitude = res.latitude;
           let longitude = res.longitude;
-          let markers = {
-            latitude: latitude,
-            longitude: longitude,
-            iconPath: "/static/images/icon-marker.png",
-            width: 30,
-            height: 30
-          };
+          // let markers = {
+          //   latitude: latitude,
+          //   longitude: longitude,
+          //   iconPath: "/static/images/icon-marker.png",
+          //   width: 30,
+          //   height: 30
+          // };
           _this.latitude = res.latitude;
           _this.longitude = res.longitude;
-          _this.markers.push(markers);
+          // _this.markers.push(markers);
         }
       });
     }
   },
+  onReady: function (e) {
+    this.mapCtx = wx.createMapContext('map')
+    this.mapCtx.moveToLocation()
+  },
 
   onLoad() {
     Object.assign(this, this.$options.data());
+    
     // 用户信息
     const userInfo = wx.getStorageSync("userInfo");
     if (!userInfo) {
@@ -112,7 +117,7 @@ export default {
 .m-card {
   @extend .g-flex-center;
   position: fixed;
-  background: #fff;
+  background: rgba(255, 255, 255, .8);
 
   left: 0;
   bottom: 20px;

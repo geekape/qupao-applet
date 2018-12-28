@@ -29,12 +29,18 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 1,
 			"list": [
 				{
 					"id": -1,
 					"name": "跑步页",
-					"pathName": "pages/run"
+					"pathName": "pages/run",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "分享页",
+					"pathName": "pages/share"
 				}
 			]
 		}

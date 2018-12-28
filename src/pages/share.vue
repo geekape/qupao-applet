@@ -22,6 +22,10 @@
         .run-info__row.run-info__row_btn
           a.u-btn.u-btn_primary.u-btn_lg(href="./me" open-type="switchTab") 分享战绩
       
+      van-popup(:show="isSharePopup") 
+        <img :src="shareImage" class="share-image" />
+        canvasdrawer(:painting="painting" class="canvasdrawer" @getImage="eventGetImage")
+        button.share-btn(@click="savePicture" v-if="shareImage") 保存图片
 </template>
 
 <script>
@@ -34,7 +38,87 @@ export default {
       runTime: '',
       runSpeed: '',
       runCal: '',
-      userInfo: {}
+      userInfo: {},
+      isSharePopup: true,
+      shareImage: '',
+      painting: {
+        width: 320,
+        height: 500,
+        clear: true,
+        views: [
+          {
+            type: 'image',
+            url: '../../static/images/tpl.png',
+            top: 0,
+            left: 0,
+            width: 320,
+        height: 500,
+          },
+          {
+            type: 'text',
+            content: '5.00',
+            fontSize: 44,
+            color: '#402D16',
+            textAlign: 'left',
+            top:290,
+            left: 15,
+            bolder: true
+          },
+          {
+            type: 'text',
+            content: 'Geekape',
+            fontSize: 14,
+            color: '#666',
+            textAlign: 'left',
+            top:300,
+            left: 240,
+            bolder: true
+          },
+          {
+            type: 'text',
+            content: '2018.12.12 00:00',
+            fontSize: 12,
+            color: '#888',
+            textAlign: 'right',
+            top:325,
+            left: 300,
+            bolder: true
+          },
+          {
+            type: 'text',
+            content: '00:00:00',
+            fontSize: 14,
+            color: '#000',
+            textAlign: 'left',
+            top:390,
+            left: 20,
+            bolder: true
+          },
+          {
+            type: 'text',
+            content: "5'00''",
+            fontSize: 14,
+            color: '#000',
+            textAlign: 'left',
+            top:390,
+            left: 144,
+            bolder: true
+          },
+           {
+            type: 'text',
+            content: "0",
+            fontSize: 14,
+            color: '#000',
+            textAlign: 'right',
+            top:390,
+            left: 264,
+            bolder: true
+          },
+   
+          
+          
+        ]
+      }
     }
   },
 
@@ -58,6 +142,35 @@ export default {
   },
 
   methods: {
+    savePicture() {
+      const _this = this
+      console.log('保存图片')
+      wx.getSetting({
+        success(res) {
+          if(!res.authSetting['scope.writePhotosAlbum']){
+            wx.authorize({
+              scope:'scope.writePhotosAlbum',
+              success() {
+                console.log('授权成功')
+              }
+            })
+          }
+        }
+      })
+
+      wx.saveImageToPhotosAlbum({
+        filePath:_this.shareImage,
+        success(res) {
+          console.log('保存成功')
+        }
+      })
+
+    },
+    eventGetImage (event) {
+      console.log(event)
+      wx.hideLoading()
+      this.shareImage = event.target.tempFilePath
+    },
     // 暂停跑步
     pauseRun () {
       this.isPause = true
@@ -85,9 +198,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/style.scss';
+@import "~styles/style.scss";
 .run {
   background: #fff;
+  /deep/ .van-popup {
+    width: 88%;
+    height: 90%;
+    background: transparent;
+  }
+  image {
+    width: 100%;
+    height: 86%;
+  }
 }
 .run-info {
   padding: 0 15px;
@@ -95,12 +217,14 @@ export default {
   position: relative;
   &__km {
     font-size: 54px;
-    .km {margin-left: 5px;}
+    .km {
+      margin-left: 5px;
+    }
   }
 
   &__row {
     display: flex;
-    
+
     justify-content: center;
     align-items: center;
     &_text {
@@ -122,7 +246,9 @@ export default {
   }
   &__item {
     flex: 1;
-    &_time {flex: 20%}
+    &_time {
+      flex: 20%;
+    }
   }
 
   &__title {
@@ -142,8 +268,9 @@ i.iconfont {
   flex: 1;
 }
 i.icon-wusheng,
-i.icon-sound {text-align: right;}
-
+i.icon-sound {
+  text-align: right;
+}
 
 // icon
 
@@ -156,6 +283,11 @@ i.icon-sound {text-align: right;}
 .run-icon_end {
   margin-right: 30px;
 }
-
-
+.share-btn {
+  background: $primary-color;
+  width: 180px;
+  border-radius: 30px;
+  margin-top: 10px;
+  color: #fff;
+}
 </style>

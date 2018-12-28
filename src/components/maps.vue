@@ -1,5 +1,5 @@
 <template lang="pug">
-  map#map.maps(:longitude="longitude" :latitude="latitude" :markers="markers" show-compass :circles="circles")
+  map#map.maps(:markers="markers" show-compass :circles="circles")
 </template>
 
 <script>
@@ -12,7 +12,8 @@ export default {
       markers:[]
     }
   },
-  created () {
+
+  onLoad () {
     const _this = this
     wx.getLocation({
       type: 'wgs84',
@@ -22,20 +23,18 @@ export default {
 
           _this.latitude = latitude
           _this.longitude = longitude
-          _this.circles.push({
-            latitude: latitude,
-            longitude: longitude,
-            radius: 50,
-            color: '#fff',
-            fillColor: '#FF7321',
-            strokeWidth: 2
-          })
+          // _this.circles.push({
+          //   latitude: latitude,
+          //   longitude: longitude,
+          //   radius: 50,
+          //   color: '#fff',
+          //   fillColor: '#FF7321',
+          //   strokeWidth: 2
+          // })
           _this.markers.push({
             latitude: latitude,
             longitude: longitude,
-            iconPath: '/static/images/icon-marker.png',
-            width: 20,
-            height: 20
+            name: 'T.I.T 创意园'
 
           })
         }  

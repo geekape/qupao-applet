@@ -1,5 +1,11 @@
 {
     "pages": [{
+            "path": "pages/test",
+            "config": {
+                "navigationBarTitleText": "首页"
+            }
+        },
+        {
             "path": "pages/index",
             "config": {
                 "navigationBarTitleText": "首页"
@@ -28,6 +34,7 @@
                 "navigationBarTitleText": "发现"
             }
         }
+
 
 
 
