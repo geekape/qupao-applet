@@ -20,10 +20,10 @@
             .run-info__number {{runCal}}
               span.f-font-xs 千卡
         .run-info__row.run-info__row_btn
-          a.u-btn.u-btn_primary.u-btn_lg(href="./me" open-type="switchTab") 分享战绩
+          a.u-btn.u-btn_primary.u-btn_lg(@click="openPopup") 分享战绩
       
       van-popup(:show="isSharePopup") 
-        <img :src="shareImage" class="share-image" />
+        cover-image(:src="shareImage" class="share-image" )
         canvasdrawer(:painting="painting" class="canvasdrawer" @getImage="eventGetImage")
         button.share-btn(@click="savePicture" v-if="shareImage") 保存图片
 </template>
@@ -39,86 +39,10 @@ export default {
       runSpeed: '',
       runCal: '',
       userInfo: {},
-      isSharePopup: true,
+      selfTime: '',
+      isSharePopup: false,
       shareImage: '',
-      painting: {
-        width: 320,
-        height: 500,
-        clear: true,
-        views: [
-          {
-            type: 'image',
-            url: '../../static/images/tpl.png',
-            top: 0,
-            left: 0,
-            width: 320,
-        height: 500,
-          },
-          {
-            type: 'text',
-            content: '5.00',
-            fontSize: 44,
-            color: '#402D16',
-            textAlign: 'left',
-            top:290,
-            left: 15,
-            bolder: true
-          },
-          {
-            type: 'text',
-            content: 'Geekape',
-            fontSize: 14,
-            color: '#666',
-            textAlign: 'left',
-            top:300,
-            left: 240,
-            bolder: true
-          },
-          {
-            type: 'text',
-            content: '2018.12.12 00:00',
-            fontSize: 12,
-            color: '#888',
-            textAlign: 'right',
-            top:325,
-            left: 300,
-            bolder: true
-          },
-          {
-            type: 'text',
-            content: '00:00:00',
-            fontSize: 14,
-            color: '#000',
-            textAlign: 'left',
-            top:390,
-            left: 20,
-            bolder: true
-          },
-          {
-            type: 'text',
-            content: "5'00''",
-            fontSize: 14,
-            color: '#000',
-            textAlign: 'left',
-            top:390,
-            left: 144,
-            bolder: true
-          },
-           {
-            type: 'text',
-            content: "0",
-            fontSize: 14,
-            color: '#000',
-            textAlign: 'right',
-            top:390,
-            left: 264,
-            bolder: true
-          },
-   
-          
-          
-        ]
-      }
+      painting: {}
     }
   },
 
@@ -127,6 +51,7 @@ export default {
   },
 
   computed: {
+    
     isMute () {
       if(this.soundState) {
         return 'icon-wusheng'
@@ -137,7 +62,10 @@ export default {
     selfTime () {
       let time = new Date()
       let [month, day, hours, minutes] = [time.getMonth()+1, time.getDate(), time.getHours(), time.getMinutes()]
-      return `${month}月${day}日 ${hours<10 ? '0'+hours : hours}:${minutes<10 ? '0'+minutes : minutes}`
+      
+      var selfTime = `${month}月${day}日 ${hours<10 ? '0'+hours : hours}:${minutes<10 ? '0'+minutes : minutes}`
+      this.selfTime = selfTime
+      return selfTime
     }
   },
 
@@ -161,7 +89,19 @@ export default {
       wx.saveImageToPhotosAlbum({
         filePath:_this.shareImage,
         success(res) {
-          console.log('保存成功')
+          wx.showModal({
+            title: '成功保存图片',
+            content: '已成功为您保存图片到手机相册，请自行前往朋友圈分享',
+            showCancel: false,
+            confirmText: '知道了',
+            success(res) {
+              if (res.confirm) {
+                wx.switchTab({url: './me'})
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
         }
       })
 
@@ -188,10 +128,90 @@ export default {
       this.runCal = data.runCal
 
       this.userInfo = wx.getStorageSync('userInfo')
+    },
+
+    openPopup() {
+      this.painting = {
+        width: 320,
+        height: 500,
+        clear: true,
+        views: [
+          {
+            type: 'image',
+            url: '../../static/images/tpl.png',
+            top: 0,
+            left: 0,
+            width: 320,
+            height: 500,
+          },
+          {
+            type: 'text',
+            content: this.runKm,
+            fontSize: 44,
+            color: '#402D16',
+            textAlign: 'left',
+            top:290,
+            left: 15,
+            bolder: true
+          },
+          {
+            type: 'text',
+            content: this.userInfo.nickName,
+            fontSize: 14,
+            color: '#666',
+            textAlign: 'left',
+            top:300,
+            left: 240,
+            bolder: true
+          },
+          {
+            type: 'text',
+            content: this.selfTime,
+            fontSize: 12,
+            color: '#888',
+            textAlign: 'right',
+            top:325,
+            left: 300,
+            bolder: true
+          },
+          {
+            type: 'text',
+            content: this.runTime,
+            fontSize: 14,
+            color: '#000',
+            textAlign: 'left',
+            top:390,
+            left: 20,
+            bolder: true
+          },
+          {
+            type: 'text',
+            content:this.runSpeed,
+            fontSize: 14,
+            color: '#000',
+            textAlign: 'left',
+            top:390,
+            left: 144,
+            bolder: true
+          },
+           {
+            type: 'text',
+            content: this.runCal,
+            fontSize: 14,
+            color: '#000',
+            textAlign: 'right',
+            top:390,
+            left: 264,
+            bolder: true
+          }
+        ]
+      }
+      this.isSharePopup = true
     }
   },
 
   onLoad () {
+    Object.assign(this, this.$options.data());
     this.getData()
   }
 }
@@ -206,7 +226,7 @@ export default {
     height: 90%;
     background: transparent;
   }
-  image {
+  cover-image {
     width: 100%;
     height: 86%;
   }

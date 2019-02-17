@@ -14,6 +14,8 @@
 import runCountDown from "@/components/runCountDown";
 import popup from "@/components/popup";
 import {api} from "@/utils/api"
+var QQMapWX = require('@/utils/qqmap-wx-jssdk.js');
+var qqmapsdk;
 
 export default {
   mpType: "page",

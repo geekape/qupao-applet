@@ -112,7 +112,6 @@ export default {
     Object.assign(this, this.$options.data());
     this.startRun()
     setTimeout(function() {api.playRandom()}, 2000)
-    
   }
 }
 </script>
